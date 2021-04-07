@@ -33,7 +33,7 @@ function style() {
         overrideBrowsersList: ["last 3 versions"],
       })
     )
-    .pipe(gulp.dest(assetPath + "/css/style.css"));
+    .pipe(gulp.dest(assetPath + "/css/"));
 }
 
 async function script() {
