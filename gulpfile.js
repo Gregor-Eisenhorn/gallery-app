@@ -40,7 +40,7 @@ async function script() {
   gulp
     .src(jsFiles)
     .pipe(plumber())
-    .pipe(concat("./assets/js/app.js"))
+    .pipe(concat("./js/app.js"))
     .pipe(
       babel({
         presets: ["@babel/env"],
