@@ -110,8 +110,7 @@ const galleryTiles = document.querySelector("ul");
 //create gallery item function
 const addGalleryItem = (path) => {
   let newContent = document.createElement("li");
-  newContent.innerHTML =
-    "<img src=" + path + '><span>&times;</span>';
+  newContent.innerHTML = "<img src=" + path + "><span>&times;</span>";
   galleryTiles.appendChild(newContent);
   deleteButton();
 };
@@ -119,14 +118,14 @@ const addGalleryItem = (path) => {
 //deleting items from gallery function
 const deleteButton = () => {
   document.querySelectorAll("span").forEach((item) => {
-    item.addEventListener("click", e => {
+    item.addEventListener("click", (e) => {
       e.target.parentNode.remove();
     });
   });
 };
 
 //fill the gallery with nice images from Ecwid
-initialGalleryImages.forEach(e => {
+initialGalleryImages.forEach((e) => {
   addGalleryItem(e.url);
 });
 
@@ -179,3 +178,29 @@ const loadUrl = () => {
     addGalleryItem(url);
   }
 };
+
+
+//loadding from d'n'd
+const dropBox = document.getElementById("dropbox");
+
+dropBox.addEventListener("dragover", e => {
+  e.preventDefault();
+});
+
+dropBox.addEventListener("drop", e => {
+  e.stopPropagation();
+  e.preventDefault();
+  e.dataTransfer.dropEffect = "copy";
+  let files = e.dataTransfer.files; // Array of all files
+
+  for (let i = 0, file; (file = files[i]); i++) {
+    if (file.type.match(/image.*/)) {
+      let reader = new FileReader();
+
+      reader.onload = function (e2) {
+        addGalleryItem(e2.target.result);
+      };
+      reader.readAsDataURL(file); // start reading the file data.
+    }
+  }
+});
