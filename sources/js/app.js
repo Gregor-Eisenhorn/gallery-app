@@ -179,7 +179,6 @@ const loadUrl = () => {
   }
 };
 
-
 //loadding from d'n'd
 const dropBox = document.getElementById("dropbox");
 
@@ -191,16 +190,16 @@ dropBox.addEventListener("drop", e => {
   e.stopPropagation();
   e.preventDefault();
   e.dataTransfer.dropEffect = "copy";
-  let files = e.dataTransfer.files; // Array of all files
+  let files = e.dataTransfer.files;
 
   for (let i = 0, file; (file = files[i]); i++) {
     if (file.type.match(/image.*/)) {
       let reader = new FileReader();
 
-      reader.onload = function (e2) {
+      reader.onload = e2 => {
         addGalleryItem(e2.target.result);
       };
-      reader.readAsDataURL(file); // start reading the file data.
+      reader.readAsDataURL(file);
     }
   }
 });

@@ -141,14 +141,13 @@ dropBox.addEventListener('drop', function (e) {
     e.preventDefault();
     e.dataTransfer.dropEffect = 'copy';
     var files = e.dataTransfer.files;
-    // Array of all files
     for (var i = 0, file; file = files[i]; i++) {
         if (file.type.match(/image.*/)) {
             var reader = new FileReader();
             reader.onload = function (e2) {
                 addGalleryItem(e2.target.result);
             };
-            reader.readAsDataURL(file);    // start reading the file data.
+            reader.readAsDataURL(file);
         }
     }
 });
