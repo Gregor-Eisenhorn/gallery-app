@@ -5,14 +5,14 @@ header {
   justify-content: space-between;
   height: 20vh;
   padding: 0 10px;
-  form {
+  .json-form {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 600px;
     border: none;
     background: #c0bedc;
-    fieldset {
+    .load-fields {
       border: none;
       display: flex;
       justify-content: space-around;
@@ -43,13 +43,13 @@ header {
   }
 }
 
-ul {
+.gallery-tiles {
   display: flex;
   flex-wrap: wrap;
   list-style-type: none;
   padding: 0;
   margin: 0;
-  li {
+  .gallery-tiles__tile {
     position: relative;
     height: 20vh;
     flex-grow: 1;

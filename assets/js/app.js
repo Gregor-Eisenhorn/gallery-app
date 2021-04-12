@@ -73,12 +73,13 @@ var galleryTiles = document.querySelector('ul');
 //create gallery item function
 var addGalleryItem = function addGalleryItem(path) {
     var newContent = document.createElement('li');
-    newContent.innerHTML = '<img src=' + path + '><span>&times;</span>';
+    newContent.innerHTML = '<img src=' + path + '><span class="delete-image">&times;</span>';
+    newContent.classList.add('gallery-tiles__tile');
     galleryTiles.appendChild(newContent);
 };
 //deleting items from gallery function
 document.addEventListener('click', function (e) {
-    if (e.target.tagName == 'SPAN') {
+    if (e.target.classlist.contains('delete-image')) {
         e.target.parentNode.remove();
     }
 });
