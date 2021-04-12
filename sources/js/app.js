@@ -108,23 +108,23 @@ const initialGalleryImages = [
 const galleryTiles = document.querySelector("ul");
 
 //create gallery item function
-const addGalleryItem = path => {
+const addGalleryItem = (path) => {
   let newContent = document.createElement("li");
-  newContent.innerHTML = "<img src=" + path + "><span class=\"delete-image\">&times;</span>";
+  newContent.innerHTML =
+    "<img src=" + path + '><span class="delete-image">&times;</span>';
   newContent.classList.add("gallery-tiles__tile");
   galleryTiles.appendChild(newContent);
 };
 
 //deleting items from gallery function
-  document.addEventListener("click", e => {
-    if(e.target.classlist.contains("delete-image")) {
-      e.target.parentNode.remove();
-    }
-  })
-
+document.addEventListener("click", (e) => {
+  if (e.target.classlist.contains("delete-image")) {
+    e.target.parentNode.remove();
+  }
+});
 
 //fill the gallery with nice images from Ecwid
-initialGalleryImages.forEach(e => {
+initialGalleryImages.forEach((e) => {
   addGalleryItem(e.url);
 });
 
@@ -170,11 +170,11 @@ const loadUrl = () => {
 //loading from d'n'd
 const dropBox = document.getElementById("dropbox");
 
-dropBox.addEventListener("dragover", e => {
+dropBox.addEventListener("dragover", (e) => {
   e.preventDefault();
 });
 
-dropBox.addEventListener("drop", e => {
+dropBox.addEventListener("drop", (e) => {
   e.stopPropagation();
   e.preventDefault();
   e.dataTransfer.dropEffect = "copy";
@@ -184,7 +184,7 @@ dropBox.addEventListener("drop", e => {
     if (file.type.match(/image.*/)) {
       let reader = new FileReader();
 
-      reader.onload = e2 => {
+      reader.onload = (e2) => {
         addGalleryItem(e2.target.result);
       };
       reader.readAsDataURL(file);
