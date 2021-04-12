@@ -22,12 +22,18 @@ header {
       }
     }
   }
-  .rep a {
+  .rep {
     display: flex;
     flex-direction: column;
-    text-align: center;
-    text-decoration: none;
+    justify-content: center;
+    a {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      text-decoration: none;
+    }
   }
+
   .dropbox {
     width: 500px;
     background: #dcd3d3;
