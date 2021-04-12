@@ -75,16 +75,13 @@ var addGalleryItem = function addGalleryItem(path) {
     var newContent = document.createElement('li');
     newContent.innerHTML = '<img src=' + path + '><span>&times;</span>';
     galleryTiles.appendChild(newContent);
-    deleteButton();
 };
 //deleting items from gallery function
-var deleteButton = function deleteButton() {
-    document.querySelectorAll('span').forEach(function (item) {
-        item.addEventListener('click', function (e) {
-            e.target.parentNode.remove();
-        });
-    });
-};
+document.addEventListener('click', function (e) {
+    if (e.target.tagName == 'SPAN') {
+        e.target.parentNode.remove();
+    }
+});
 //fill the gallery with nice images from Ecwid
 initialGalleryImages.forEach(function (e) {
     addGalleryItem(e.url);
@@ -93,15 +90,7 @@ initialGalleryImages.forEach(function (e) {
 var loadFile = function loadFile() {
     var input, file, fr;
     input = document.getElementById('fileinput');
-    if (typeof window.FileReader !== 'function') {
-        alert('The file API isn\'t supported on this browser yet.');
-        return;
-    }
-    if (!input) {
-        alert('Um, couldn\'t find the fileinput element.');
-    } else if (!input.files) {
-        alert('This browser doesn\'t seem to support the `files` property of file inputs.');
-    } else if (!input.files[0]) {
+    if (!input.files[0]) {
         alert('Please select a file before clicking \'Load\'');
     } else {
         file = input.files[0];
@@ -131,7 +120,7 @@ var loadUrl = function loadUrl() {
         addGalleryItem(url);
     }
 };
-//loadding from d'n'd
+//loading from d'n'd
 var dropBox = document.getElementById('dropbox');
 dropBox.addEventListener('dragover', function (e) {
     e.preventDefault();

@@ -9,22 +9,48 @@
     <title>Gallery</title>
   </head>
   <body>
-    <div class="dropbox" id="dropbox">DROPZONE</div>
-    <form
-      id="jsonFile"
-      name="jsonFile"
-      enctype="multipart/form-data"
-      method="post"
-    >
-      <fieldset>
-        <h2>Json File</h2>
-        <input type="text" id="urlinput" />
-        <input type="button" value="Load from url" onclick="loadUrl();" />
-        <br>
-        <input type="file" id="fileinput" />
-        <input type="button" value="Load from JSON file" onclick="loadFile();" />
-      </fieldset>
-    </form>
+    <header>
+      <form
+        id="jsonFile"
+        name="jsonFile"
+        enctype="multipart/form-data"
+        method="post"
+      >
+        <fieldset>
+          <div>
+            <input
+              type="text"
+              id="urlinput"
+              placeholder="enter your image URL"
+            />
+            <input type="button" value="Load from url" onclick="loadUrl();" />
+          </div>
+          <div>
+            <input type="file" id="fileinput" />
+            <input
+              type="button"
+              value="Load from JSON file"
+              onclick="loadFile();"
+            />
+          </div>
+        </fieldset>
+      </form>
+      <div class="rep">
+        <a
+          href="https://github.com/Gregor-Eisenhorn/gallery-app"
+          target="_blank"
+        >
+          <img
+            src="data:image/png;base64,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"
+            alt="github"
+          />
+          <span>Repository</span>
+        </a>
+      </div>
+      <div class="dropbox" id="dropbox">
+        <span>drop an image file here to add it to the library </span>
+      </div>
+    </header>
 
     <!-- gallery tiles -->
     <ul></ul>
