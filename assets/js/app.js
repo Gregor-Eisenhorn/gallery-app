@@ -79,7 +79,7 @@ var addGalleryItem = function addGalleryItem(path) {
 };
 //deleting items from gallery function
 document.addEventListener('click', function (e) {
-    if (e.target.classlist.contains('delete-image')) {
+    if (e.target.classList.contains('delete-image')) {
         e.target.parentNode.remove();
     }
 });
