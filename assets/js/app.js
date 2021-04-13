@@ -69,11 +69,14 @@ var initialGalleryImages = [{
   height: 787
 }];
 //gallery pallette
-var galleryTiles = document.querySelector('ul');
+var galleryTiles = document.querySelector('.gallery-tiles');
 //create gallery item function
 var addGalleryItem = function addGalleryItem(path) {
     var newContent = document.createElement('li');
-    newContent.innerHTML = '<img src=' + path + '><span class="delete-image">&times;</span>';
+    newContent.innerHTML = '<span class="delete-image">&times;</span>';
+    var newImage = new Image();
+    newImage.src = path;
+    newContent.appendChild(newImage);
     newContent.classList.add('gallery-tiles__tile');
     galleryTiles.appendChild(newContent);
 };

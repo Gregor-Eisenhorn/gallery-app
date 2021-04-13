@@ -105,26 +105,31 @@ const initialGalleryImages = [
 ];
 
 //gallery pallette
-const galleryTiles = document.querySelector("ul");
+const galleryTiles = document.querySelector(".gallery-tiles");
 
 //create gallery item function
-const addGalleryItem = (path) => {
+const addGalleryItem = path => {
   let newContent = document.createElement("li");
-  newContent.innerHTML =
-    "<img src=" + path + '><span class="delete-image">&times;</span>';
+  newContent.innerHTML = '<span class="delete-image">&times;</span>';
+
+  let newImage = new Image();
+  newImage.src = path;
+
+  newContent.appendChild(newImage);
   newContent.classList.add("gallery-tiles__tile");
+
   galleryTiles.appendChild(newContent);
 };
 
 //deleting items from gallery function
-document.addEventListener("click", (e) => {
+document.addEventListener("click", e => {
   if (e.target.classList.contains("delete-image")) {
     e.target.parentNode.remove();
   }
 });
 
 //fill the gallery with nice images from Ecwid
-initialGalleryImages.forEach((e) => {
+initialGalleryImages.forEach(e => {
   addGalleryItem(e.url);
 });
 
@@ -145,7 +150,7 @@ const loadFile = () => {
   function receivedText(e) {
     let lines = e.target.result;
     let newArr = JSON.parse(lines);
-    newArr.galleryImages.forEach((e) => {
+    newArr.galleryImages.forEach(e => {
       addGalleryItem(e.url);
     });
   }
@@ -170,11 +175,11 @@ const loadUrl = () => {
 //loading from d'n'd
 const dropBox = document.getElementById("dropbox");
 
-dropBox.addEventListener("dragover", (e) => {
+dropBox.addEventListener("dragover", e => {
   e.preventDefault();
 });
 
-dropBox.addEventListener("drop", (e) => {
+dropBox.addEventListener("drop", e => {
   e.stopPropagation();
   e.preventDefault();
   e.dataTransfer.dropEffect = "copy";
@@ -184,7 +189,7 @@ dropBox.addEventListener("drop", (e) => {
     if (file.type.match(/image.*/)) {
       let reader = new FileReader();
 
-      reader.onload = (e2) => {
+      reader.onload = e2 => {
         addGalleryItem(e2.target.result);
       };
       reader.readAsDataURL(file);
