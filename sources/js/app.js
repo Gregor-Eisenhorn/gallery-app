@@ -107,6 +107,17 @@ const initialGalleryImages = [
 //gallery pallette
 const galleryTiles = document.querySelector(".gallery-tiles");
 
+//'add' buttons animate
+const addButtons = document.querySelectorAll("input[type=button]");
+addButtons.forEach(i => {
+  i.addEventListener("click", e => {
+    e.target.classList.add("clicked");
+    setTimeout(() => {
+      e.target.classList.remove("clicked");
+    }, 150);
+  });
+});
+
 //create gallery item function
 const addGalleryItem = path => {
   let newContent = document.createElement("li");
@@ -118,7 +129,7 @@ const addGalleryItem = path => {
   newContent.appendChild(newImage);
   newContent.classList.add("gallery-tiles__tile");
 
-  galleryTiles.appendChild(newContent);
+  galleryTiles.prepend(newContent);
 };
 
 //deleting items from gallery function
@@ -135,11 +146,15 @@ initialGalleryImages.forEach(e => {
 
 //loading from json file
 const loadFile = () => {
-  let input, file, fr;
+  let input, file, fr, dropbox;
   input = document.getElementById("fileinput");
 
   if (!input.files[0]) {
-    alert("Please select a file before clicking 'Load'");
+    dropbox = document.getElementById("dropbox");
+    dropbox.classList.add("shake");
+    setTimeout(() => {
+      dropbox.classList.remove("shake");
+    }, 6000);
   } else {
     file = input.files[0];
     fr = new FileReader();
@@ -158,15 +173,19 @@ const loadFile = () => {
 
 //loading from url
 const loadUrl = () => {
-  let input, url;
+  let input, url, btn, label;
   input = document.getElementById("urlinput");
   url = input.value;
+  btn = document.getElementById("url-load-btn");
+
+  btn.classList.add("clicked");
 
   if (url == "") {
-    alert("Please provide URL of your image first");
-  } else if (!/^(ftp|http|https):\/\/[^ "]+$/.test(url)) {
-    alert("That's not a URL, probably...");
-    return;
+    label=document.getElementById('userLabel');
+    label.classList.add("shake");
+    setTimeout(() => {
+      label.classList.remove("shake");
+    }, 6000);
   } else {
     addGalleryItem(url);
   }

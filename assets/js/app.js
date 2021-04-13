@@ -70,6 +70,16 @@ var initialGalleryImages = [{
 }];
 //gallery pallette
 var galleryTiles = document.querySelector('.gallery-tiles');
+//'add' buttons animate
+var addButtons = document.querySelectorAll('input[type=button]');
+addButtons.forEach(function (i) {
+    i.addEventListener('click', function (e) {
+        e.target.classList.add('clicked');
+        setTimeout(function () {
+            e.target.classList.remove('clicked');
+        }, 150);
+    });
+});
 //create gallery item function
 var addGalleryItem = function addGalleryItem(path) {
     var newContent = document.createElement('li');
@@ -78,7 +88,7 @@ var addGalleryItem = function addGalleryItem(path) {
     newImage.src = path;
     newContent.appendChild(newImage);
     newContent.classList.add('gallery-tiles__tile');
-    galleryTiles.appendChild(newContent);
+    galleryTiles.prepend(newContent);
 };
 //deleting items from gallery function
 document.addEventListener('click', function (e) {
@@ -92,10 +102,14 @@ initialGalleryImages.forEach(function (e) {
 });
 //loading from json file
 var loadFile = function loadFile() {
-    var input, file, fr;
+    var input, file, fr, dropbox;
     input = document.getElementById('fileinput');
     if (!input.files[0]) {
-        alert('Please select a file before clicking \'Load\'');
+        dropbox = document.getElementById('dropbox');
+        dropbox.classList.add('shake');
+        setTimeout(function () {
+            dropbox.classList.remove('shake');
+        }, 6000);
     } else {
         file = input.files[0];
         fr = new FileReader();
@@ -112,14 +126,17 @@ var loadFile = function loadFile() {
 };
 //loading from url
 var loadUrl = function loadUrl() {
-    var input, url;
+    var input, url, btn, label;
     input = document.getElementById('urlinput');
     url = input.value;
+    btn = document.getElementById('url-load-btn');
+    btn.classList.add('clicked');
     if (url == '') {
-        alert('Please provide URL of your image first');
-    } else if (!/^(ftp|http|https):\/\/[^ "]+$/.test(url)) {
-        alert('That\'s not a URL, probably...');
-        return;
+        label = document.getElementById('userLabel');
+        label.classList.add('shake');
+        setTimeout(function () {
+            label.classList.remove('shake');
+        }, 6000);
     } else {
         addGalleryItem(url);
     }
