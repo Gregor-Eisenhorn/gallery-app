@@ -112,16 +112,26 @@ var receivedText = function receivedText(e) {
         addGalleryItem(e.url);
     });
 };
+//error animation function
+var shakeIt = function shakeIt(field) {
+    field.classList.add('shake');
+    setTimeout(function () {
+        field.classList.remove('shake');
+    }, 6000);
+};
 //first of all - fill the gallery with nice images from Ecwid
 initialGalleryImages.forEach(function (e) {
     addGalleryItem(e.url);
 });
 //loading from json file
 var loadFile = function loadFile() {
-    var input, file, fr, dropbox;
+    var input, file, fr;
     input = document.getElementById('fileinput');
-    //is it a json?
-    if (input.files[0].type.match('application/json')) {
+    //is there a file?
+    if (!input.files[0]) {
+        shakeIt(dropbox);
+    }    //is it a json?
+    else if (input.files[0].type.match('application/json')) {
         file = input.files[0];
         fr = new FileReader();
         fr.onload = receivedText;
@@ -132,11 +142,7 @@ var loadFile = function loadFile() {
     }    //otherwise reset the input and shake it
     else {
         input.value = '';
-        dropbox = document.getElementById('dropbox');
-        dropbox.classList.add('shake');
-        setTimeout(function () {
-            dropbox.classList.remove('shake');
-        }, 6000);
+        shakeIt();
     }
 };
 //loading from url
@@ -145,14 +151,11 @@ var loadUrl = function loadUrl() {
     input = document.getElementById('urlinput');
     url = input.value;
     btn = document.getElementById('url-load-btn');
+    label = document.getElementById('userLabel');
     btn.classList.add('clicked');
     if (url == '' || !/^(ftp|http|https):\/\/[^ "]+$/.test(url)) {
         input.value = '';
-        label = document.getElementById('userLabel');
-        label.classList.add('shake');
-        setTimeout(function () {
-            label.classList.remove('shake');
-        }, 6000);
+        shakeIt(label);
     } else {
         addGalleryItem(url);
     }
