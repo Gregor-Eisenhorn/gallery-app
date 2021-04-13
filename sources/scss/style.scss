@@ -51,11 +51,15 @@ header {
         color: #666;
         font-weight: bold;
         margin-bottom: 1em;
-        &:focus + label {
-          top: -15px;
+        &:focus + label,
+        &:valid + label {
+          top: -18px;
           left: 3px;
           height: 2%;
           padding: 0.8em 1.5em;
+          @media (max-width: 640px) {
+            top: -23px !important;
+          }
         }
       }
       div {
@@ -510,25 +514,22 @@ header {
   .form {
     width: auto !important;
     height: 30vh;
-  }
-  .load-fields {
-    flex-direction: column;
-    top: 20px !important;
-    
-    &__url-based {
-      margin-bottom: 17px;
-      margin-right: 0 !important;
-      
-      label {
-        top: -1px !important;
-        width: 55% !important;
-      }
-      input:focus + label {
-        top: -20px !important;
-        height: 1% !important;
+    .load-fields {
+      flex-direction: column;
+      top: 20px !important;
+
+      &__url-based {
+        margin-bottom: 17px;
+        margin-right: 0 !important;
+
+        label {
+          top: -1px !important;
+          width: 55% !important;
+        }
       }
     }
   }
+
   .gallery-tiles__tile {
     height: auto !important;
     img {

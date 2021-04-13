@@ -149,6 +149,15 @@ addButtons.forEach(i => {
   });
 });
 
+//json parser-loader function
+const receivedText = e => {
+  let lines = e.target.result;
+  let newArr = JSON.parse(lines);
+  newArr.galleryImages.forEach(e => {
+    addGalleryItem(e.url);
+  });
+};
+
 //first of all - fill the gallery with nice images from Ecwid
 initialGalleryImages.forEach(e => {
   addGalleryItem(e.url);
@@ -180,14 +189,6 @@ const loadFile = () => {
     setTimeout(() => {
       dropbox.classList.remove("shake");
     }, 6000);
-  }
-
-  function receivedText(e) {
-    let lines = e.target.result;
-    let newArr = JSON.parse(lines);
-    newArr.galleryImages.forEach(e => {
-      addGalleryItem(e.url);
-    });
   }
 };
 

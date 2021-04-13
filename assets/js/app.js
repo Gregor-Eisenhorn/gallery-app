@@ -104,6 +104,14 @@ addButtons.forEach(function (i) {
         }, 150);
     });
 });
+//json parser-loader function
+var receivedText = function receivedText(e) {
+    var lines = e.target.result;
+    var newArr = JSON.parse(lines);
+    newArr.galleryImages.forEach(function (e) {
+        addGalleryItem(e.url);
+    });
+};
 //first of all - fill the gallery with nice images from Ecwid
 initialGalleryImages.forEach(function (e) {
     addGalleryItem(e.url);
@@ -129,13 +137,6 @@ var loadFile = function loadFile() {
         setTimeout(function () {
             dropbox.classList.remove('shake');
         }, 6000);
-    }
-    function receivedText(e) {
-        var lines = e.target.result;
-        var newArr = JSON.parse(lines);
-        newArr.galleryImages.forEach(function (e) {
-            addGalleryItem(e.url);
-        });
     }
 };
 //loading from url
