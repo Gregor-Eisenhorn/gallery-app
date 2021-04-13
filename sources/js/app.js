@@ -107,17 +107,6 @@ const initialGalleryImages = [
 //gallery pallette
 const galleryTiles = document.querySelector(".gallery-tiles");
 
-//'add' buttons animate
-const addButtons = document.querySelectorAll("input[type=button]");
-addButtons.forEach(i => {
-  i.addEventListener("click", e => {
-    e.target.classList.add("clicked");
-    setTimeout(() => {
-      e.target.classList.remove("clicked");
-    }, 150);
-  });
-});
-
 //create gallery item function
 const addGalleryItem = path => {
   let newContent = document.createElement("li");
@@ -132,6 +121,16 @@ const addGalleryItem = path => {
   galleryTiles.prepend(newContent);
 };
 
+//local file loader function
+const loadLocalFile = file => {
+  let reader = new FileReader();
+
+  reader.onload = e => {
+    addGalleryItem(e.target.result);
+  };
+  reader.readAsDataURL(file);
+};
+
 //deleting items from gallery function
 document.addEventListener("click", e => {
   if (e.target.classList.contains("delete-image")) {
@@ -139,7 +138,18 @@ document.addEventListener("click", e => {
   }
 });
 
-//fill the gallery with nice images from Ecwid
+//'add' buttons animate function
+const addButtons = document.querySelectorAll("input[type=button]");
+addButtons.forEach(i => {
+  i.addEventListener("click", e => {
+    e.target.classList.add("clicked");
+    setTimeout(() => {
+      e.target.classList.remove("clicked");
+    }, 150);
+  });
+});
+
+//first of all - fill the gallery with nice images from Ecwid
 initialGalleryImages.forEach(e => {
   addGalleryItem(e.url);
 });
@@ -149,17 +159,27 @@ const loadFile = () => {
   let input, file, fr, dropbox;
   input = document.getElementById("fileinput");
 
-  if (!input.files[0]) {
+  //is it a json?
+  if (input.files[0].type.match("application/json")) {
+    file = input.files[0];
+    fr = new FileReader();
+    fr.onload = receivedText;
+    fr.readAsText(file);
+  }
+
+  //is it an image file?
+  else if (input.files[0].type.match(/image.*/)) {
+    loadLocalFile(input.files[0]);
+  }
+
+  //otherwise reset the input and shake it
+  else {
+    input.value = "";
     dropbox = document.getElementById("dropbox");
     dropbox.classList.add("shake");
     setTimeout(() => {
       dropbox.classList.remove("shake");
     }, 6000);
-  } else {
-    file = input.files[0];
-    fr = new FileReader();
-    fr.onload = receivedText;
-    fr.readAsText(file);
   }
 
   function receivedText(e) {
@@ -181,7 +201,7 @@ const loadUrl = () => {
   btn.classList.add("clicked");
 
   if (url == "") {
-    label=document.getElementById('userLabel');
+    label = document.getElementById("userLabel");
     label.classList.add("shake");
     setTimeout(() => {
       label.classList.remove("shake");
@@ -191,7 +211,7 @@ const loadUrl = () => {
   }
 };
 
-//loading from d'n'd
+//loading from drag and drop
 const dropBox = document.getElementById("dropbox");
 
 dropBox.addEventListener("dragover", e => {
@@ -206,12 +226,7 @@ dropBox.addEventListener("drop", e => {
 
   for (let i = 0, file; (file = files[i]); i++) {
     if (file.type.match(/image.*/)) {
-      let reader = new FileReader();
-
-      reader.onload = e2 => {
-        addGalleryItem(e2.target.result);
-      };
-      reader.readAsDataURL(file);
+      loadLocalFile(file);
     }
   }
 });

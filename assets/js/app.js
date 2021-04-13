@@ -70,16 +70,6 @@ var initialGalleryImages = [{
 }];
 //gallery pallette
 var galleryTiles = document.querySelector('.gallery-tiles');
-//'add' buttons animate
-var addButtons = document.querySelectorAll('input[type=button]');
-addButtons.forEach(function (i) {
-    i.addEventListener('click', function (e) {
-        e.target.classList.add('clicked');
-        setTimeout(function () {
-            e.target.classList.remove('clicked');
-        }, 150);
-    });
-});
 //create gallery item function
 var addGalleryItem = function addGalleryItem(path) {
     var newContent = document.createElement('li');
@@ -90,13 +80,31 @@ var addGalleryItem = function addGalleryItem(path) {
     newContent.classList.add('gallery-tiles__tile');
     galleryTiles.prepend(newContent);
 };
+//local file loader function
+var loadLocalFile = function loadLocalFile(file) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+        addGalleryItem(e.target.result);
+    };
+    reader.readAsDataURL(file);
+};
 //deleting items from gallery function
 document.addEventListener('click', function (e) {
     if (e.target.classList.contains('delete-image')) {
         e.target.parentNode.remove();
     }
 });
-//fill the gallery with nice images from Ecwid
+//'add' buttons animate function
+var addButtons = document.querySelectorAll('input[type=button]');
+addButtons.forEach(function (i) {
+    i.addEventListener('click', function (e) {
+        e.target.classList.add('clicked');
+        setTimeout(function () {
+            e.target.classList.remove('clicked');
+        }, 150);
+    });
+});
+//first of all - fill the gallery with nice images from Ecwid
 initialGalleryImages.forEach(function (e) {
     addGalleryItem(e.url);
 });
@@ -104,17 +112,23 @@ initialGalleryImages.forEach(function (e) {
 var loadFile = function loadFile() {
     var input, file, fr, dropbox;
     input = document.getElementById('fileinput');
-    if (!input.files[0]) {
+    //is it a json?
+    if (input.files[0].type.match('application/json')) {
+        file = input.files[0];
+        fr = new FileReader();
+        fr.onload = receivedText;
+        fr.readAsText(file);
+    }    //is it an image file?
+    else if (input.files[0].type.match(/image.*/)) {
+        loadLocalFile(input.files[0]);
+    }    //otherwise reset the input and shake it
+    else {
+        input.value = '';
         dropbox = document.getElementById('dropbox');
         dropbox.classList.add('shake');
         setTimeout(function () {
             dropbox.classList.remove('shake');
         }, 6000);
-    } else {
-        file = input.files[0];
-        fr = new FileReader();
-        fr.onload = receivedText;
-        fr.readAsText(file);
     }
     function receivedText(e) {
         var lines = e.target.result;
@@ -141,7 +155,7 @@ var loadUrl = function loadUrl() {
         addGalleryItem(url);
     }
 };
-//loading from d'n'd
+//loading from drag and drop
 var dropBox = document.getElementById('dropbox');
 dropBox.addEventListener('dragover', function (e) {
     e.preventDefault();
@@ -153,11 +167,7 @@ dropBox.addEventListener('drop', function (e) {
     var files = e.dataTransfer.files;
     for (var i = 0, file; file = files[i]; i++) {
         if (file.type.match(/image.*/)) {
-            var reader = new FileReader();
-            reader.onload = function (e2) {
-                addGalleryItem(e2.target.result);
-            };
-            reader.readAsDataURL(file);
+            loadLocalFile(file);
         }
     }
 });

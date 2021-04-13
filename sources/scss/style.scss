@@ -1,10 +1,4 @@
-//a little bit of reset code just in case
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  outline: none;
-}
+@import "vendors/reset";
 
 body {
   background: #74ebd5;
@@ -23,9 +17,7 @@ body {
 }
 
 header {
-  display: flex;
   justify-content: space-between;
-  height: 20vh;
   padding: 0 10px;
   .form {
     display: flex;
@@ -46,16 +38,14 @@ header {
     }
     .load-fields {
       position: relative;
-      top: -20px;
+      top: 55px;
       border: none;
       display: flex;
       justify-content: space-around;
-      height: 20%;
+      height: 20vh;
       &__field {
         display: block;
         width: 100%;
-        height: 100%;
-        padding: 1em;
         border: 3px solid #fff;
         background-color: transparent;
         color: #666;
@@ -64,23 +54,26 @@ header {
         &:focus + label {
           top: -15px;
           left: 3px;
-          width: 30%;
           height: 10%;
           padding: 0.8em 1.5em;
         }
       }
       div {
         width: 210px;
+        height: 100px;
       }
       &__url-based {
-        margin-right: 20px;
-
+        margin-right: 50px;
+        input[type="text"] {
+          height: 29px;
+          outline: none;
+        }
         label {
           position: absolute;
-          top: 4px;
-          left: 4px;
-          width: 40%;
-          height: 28px;
+          top: 3px;
+          left: 3px;
+          width: 20%;
+          height: 10px;
           padding: 0.8em 1.5em;
           background-color: skyblue;
           display: flex;
@@ -100,12 +93,13 @@ header {
           background-color: skyblue;
           color: white;
           font-size: 0.75em;
-          padding: 0.1em;
           text-align: center;
+          padding: 0.1em;
         }
       }
       &__add-button {
         border: none;
+        outline: none;
         padding: 0.9em;
         background-color: skyblue;
         color: #fff;
@@ -117,6 +111,7 @@ header {
         transition: all 0s ease;
         position: relative;
         left: 61px;
+        -webkit-appearance: none;
         &.clicked {
           box-shadow: 0px 0px;
           top: 10px;
@@ -512,32 +507,29 @@ header {
   }
 }
 
-@media (max-width: 1100px) {
-  div.rep {
-    display: none;
+@media (max-width: 640px) {
+  .form {
+    width: auto !important;
+    height: 30vh;
   }
-}
-@media (max-width: 795px) {
-  #dropbox {
-    display: none;
-  }
-  #jsonFile {
-    width: 100%;
-  }
-}
-
-@media (max-width: 560px) {
-  #jsonFile {
-    fieldset {
-      flex-direction: column;
-      div + div {
-        margin-top: 40px;
+  .load-fields {
+    flex-direction: column;
+    top: 20px !important;
+    
+    &__url-based {
+      margin-bottom: 17px;
+      margin-right: 0 !important;
+      
+      label {
+        top: -1px !important;
+        width: 55% !important;
+      }
+      input:focus + label {
+        top: -20px !important;
+        height: 1% !important;
       }
     }
   }
-}
-
-@media (max-width: 480px) {
   .gallery-tiles__tile {
     height: auto !important;
     img {
@@ -546,7 +538,7 @@ header {
   }
 }
 
-@media (max-width: 310px) {
+@media (max-width: 280px) {
   header {
     display: none;
   }
