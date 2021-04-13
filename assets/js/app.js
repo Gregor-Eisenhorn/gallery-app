@@ -145,7 +145,8 @@ var loadUrl = function loadUrl() {
     url = input.value;
     btn = document.getElementById('url-load-btn');
     btn.classList.add('clicked');
-    if (url == '') {
+    if (url == '' || !/^(ftp|http|https):\/\/[^ "]+$/.test(url)) {
+        input.value = '';
         label = document.getElementById('userLabel');
         label.classList.add('shake');
         setTimeout(function () {

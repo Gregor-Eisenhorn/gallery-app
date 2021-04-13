@@ -200,7 +200,8 @@ const loadUrl = () => {
 
   btn.classList.add("clicked");
 
-  if (url == "") {
+  if (url == "" || !/^(ftp|http|https):\/\/[^ "]+$/.test(url)) {
+    input.value = "";
     label = document.getElementById("userLabel");
     label.classList.add("shake");
     setTimeout(() => {
